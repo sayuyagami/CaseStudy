@@ -1,0 +1,64 @@
+<div id="sky">
+     
+<p style="border:2px solid greenyellow"></p>
+<div >
+    <div id="placebutton1">
+        <button mat-raised-button class="btn" (click)="kharif()" style="width: 150px;height:50px;color: white;margin-right: 20px;"> Kharif Crops</button>
+        
+            <button mat-raised-button class="btn" (click)="rabbi()" style="width: 150px;height:50px;color: white;margin-right: 20px;"> Rabbi Crops</button>
+        <button mat-raised-button class="btn" (click)="cash()" style="width: 150px;height:50px;color: white;">Cash Crops</button>
+    </div>
+  <div id="search">
+    <mat-form-field class="full-width" appearance="outline">
+      <span matPrefix> </span>
+      <input type="text" matInput placeholder="Search" name= "cropname" [(ngModel)]= "cropname" (ngModelChange)="Onsearch()">
+      <button matSuffix mat-button><mat-icon >search</mat-icon></button>
+      </mat-form-field>
+  </div>
+ 
+</div>
+
+
+<div class="container row">
+    <div class="posts" id="fixed-content">
+        <div class="container row" >
+            <ng-container  *ngFor="let c of crops;">
+                <div  style="background-color: transparent;border: transparent;padding-bottom: 50px;" class="card col-md-4">
+                    <mat-card id="postcard">
+                        <h4 style="color:black">{{c.croptype}}</h4>
+                          <img  class="fit-picture" [src]=c.image><br><br>
+                          <mat-card-title >{{c.cropname}}</mat-card-title>
+                          <mat-card-subtitle style="color:rgb(46, 0, 252);">Posted by {{c.farmername | titlecase}}</mat-card-subtitle>
+                          <mat-card-content >Location : &nbsp;{{c.croplocation}}<br>
+                              Quantity : &nbsp;{{c.cropqty}}<br>
+                          <mat-card-subtitle style="color: green;">Price : &nbsp;₹ {{c.cropprice}}</mat-card-subtitle>
+                              
+                          </mat-card-content>
+                          <div  *ngIf="dloggedIn; then thenBlock; else elseBlock"></div>
+                
+                          <ng-template #thenBlock> 
+                              <div *ngIf="c.requests; then subBlock; else unsubBlock"></div>
+                              <ng-template #subBlock>
+                                <button (click)="subscribe(c.requests,c.farmerid)" mat-raised-button color="primary" >UnSubscribe</button>    
+                              </ng-template>
+                              <ng-template #unsubBlock>
+                              <button (click)="subscribe(c.requests,c.farmerid)" mat-raised-button color="primary" >Subscribe</button>
+                            </ng-template>
+                          </ng-template>
+                          <ng-template #elseBlock> 
+                              <button (click)="openDialog()" mat-raised-button color="primary" >Subscribe</button>
+                          </ng-template>
+           
+                          </mat-card>
+                </div>
+       
+            </ng-container>
+        </div>
+      </div>
+    
+  
+    </div>
+</div>
+    <img src="/assets/data/linegrass.png" style="height: 199px;width:100%;margin-top:18%;background-attachment: fixed;"/>
+
+

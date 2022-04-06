@@ -1,0 +1,100 @@
+<p style="border:2px solid greenyellow"></p>
+    <!--<p class="line2"></p>-->
+   
+    <div>
+       
+        <div class="container row">
+
+            <div class="card col-md-4" style="background-color: lawngreen;">
+                <i style="font-weight: 50px;margin-top: 120px;font-family: Georgia, 'Times New Roman', Times, serif;"><b>
+                    <dl>
+                        <dd style="margin-left: 60px;">"Hello there Add yours crops</dd>
+                        <dd style="margin-left: 40px;"> make the dealers reach out to you</dd> 
+                        <dd style="margin-left: 80px;">with best prices"</dd>
+                    </dl>
+                    </b></i>
+                    <img src="/assets/data/grass.png" style="height: 199px;width:100%;margin-top:18%;background-attachment: fixed;"/>
+            </div>
+            
+            <div  class="card col-md-2" style="margin-top: 2%;width: 650px;
+            padding: 2%;
+            border: black;
+            border-radius: 5%;">
+         
+                  <form [formGroup]="cropform" >
+                      <div class="container row" >
+                          <label>Crop Image</label>
+                          <div class="container row">
+                              <div class="col-md-6">
+                                  <input formControlName="addimage" mat-icon-button type="file" (change)="onFileChanged($event)">
+                        </div>
+                              <div class="col-md-6">
+                                  <input
+                                      style="background-color: blueviolet;color: white;padding: 6px;border-radius: 3px;width: 90px;"
+                                      type="button" (click)="onUpload()" value="upload">
+                              </div>
+                             
+                          </div>
+                        </div>
+                          <br>
+                          <div class="container row">
+                          <mat-form-field appearance="outline">
+                              <mat-label>CropName</mat-label>
+                              <input formControlName="cropname"   type="text" matInput />
+                          </mat-form-field>
+                          <small style="margin-left: 80px;" class="text-danger" *ngIf="cropform.controls['cropname'].dirty && cropform.hasError('required','cropname')">
+                            Crop name is required
+                             </small> 
+                        </div>
+                    
+                      <div class="container row">
+                          <mat-form-field appearance="outline">
+                              <mat-label>Crop Types</mat-label>
+                              <select formControlName="croptype"  matNativeControl>
+                                  <option value="KharifCrops">Kharif Crops</option>
+                                  <option value="RabbiCrops">Rabbi Crops</option>
+                                  <option value="CashCrops">Cash Crops</option>
+                              </select>
+                          </mat-form-field>
+                          
+                      </div>
+                     
+                      <div class="container row">
+                          <mat-form-field appearance="outline">
+                              <mat-label>CropPrice</mat-label>
+                              <input formControlName="cropprice"  type="number" matInput />
+                          </mat-form-field>
+                          <small style="margin-left: 80px;" class="text-danger" *ngIf="cropform.controls['cropprice'].dirty && cropform.hasError('required','cropprice')">
+                            Crop price is required
+                             </small> 
+                      </div>
+                      <div class="container row">
+                          <mat-form-field appearance="outline">
+                              <mat-label>Crop Quantity(Kgs)</mat-label>
+                              <input formControlName="cropqty"  type="text" matInput />
+                          </mat-form-field>
+                          <small style="margin-left: 80px;" class="text-danger" *ngIf="cropform.controls['cropqty'].dirty && cropform.hasError('required','cropqty')">
+                            Crop quantity is required
+                             </small> 
+                      </div>
+                      <div class="container row">
+                          <mat-form-field appearance="outline">
+                              <mat-label>Crop Location</mat-label>
+                              <input formControlName="croplocation"  type="text" matInput />
+                          </mat-form-field>
+                          <small style="margin-left: 80px;" class="text-danger" *ngIf="cropform.controls['croplocation'].dirty && cropform.hasError('required','croplocation')">
+                            Crop location is required
+                             </small> 
+                           
+                      </div>
+                      <button mat-raised-button color="primary" style="left: 20%;width: 50%;" (click)="addpost(cropform.value)" type="submit">Add Crop</button>
+                      
+                  </form>
+                  
+              </div>
+             
+        </div>
+        
+    </div>
+  
+    <!-- <img src="/assets/data/crop.png" style="height: 199px;width:100%;background-attachment: fixed;"/> -->

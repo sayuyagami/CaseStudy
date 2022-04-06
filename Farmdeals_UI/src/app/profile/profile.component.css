@@ -1,0 +1,52 @@
+#online {
+    width: 1px;
+    height: 1px;
+    background: green;
+    border-radius: 100%
+  }
+
+  #pic{
+    margin-right: 20%;
+    width: 150px;
+    height: 150px;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    box-shadow: 10px 10px 5px  lightskyblue
+  }
+
+  #profilecard{
+    width: 600px;
+    margin-left: 5%;
+  }
+
+  #letter{
+      color: white;
+      font-size: 70px;
+      padding: auto;
+      margin-left: 40px;
+      margin-top: 62px;
+  }
+  #fixed-content{
+    top: 58%;
+    width: 81%;
+    bottom:0;
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+  }
+
+  #fixed-content::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+  #placebutton{ 
+    margin-top: 17px;
+    margin-left: 1%;
+  }
+  .matcard{
+    transition:0.3s ease-in-out
+  }
+  .matcard:hover{
+    transition: 0.3 ease-in-out;
+    transform: scale(1.1);
+  }

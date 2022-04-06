@@ -1,0 +1,196 @@
+<p style="border:2px solid lawngreen"></p>
+<div  style="margin-left: 50px;background-color: rgb(219, 250, 198);">
+  <div *ngIf="rolecheck; then thenBlock; else elseBlock"></div>
+
+  <ng-template #thenBlock>
+    <div class="container row">
+      <h2><Strong>Farmer</Strong></h2>
+      <div class="col-md-6">
+        <mat-card style="padding: 25px;">
+          <mat-card-title>{{userdata.farmername | titlecase}}</mat-card-title>
+          <mat-card-subtitle>{{userdata.femail}}</mat-card-subtitle>
+          <mat-card-content><label>Mobile Number &nbsp;</label> {{userdata.fphn}}
+          </mat-card-content>
+          <b id="online">&nbsp;&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;<i>Active</i><br>
+          
+        </mat-card>
+        <div id="placebutton">
+        <button mat-raised-button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          style="width: 180px;background-color: green;color: white;">Edit Profile</button>
+      </div>
+      </div>
+      <div id="pic" style="margin-left: 15%;">
+        <p id="letter">{{userdata.farmername | titlecase | slice:0:1}}</p>
+      </div>
+      
+    </div>
+
+    <h3 style="color: rgb(0, 0, 0); padding: 20px;font-weight: bold;font-size: larger;">Receipts</h3>
+    <div *ngIf="!receipts?.length; then nofarmerdata;else showfarmerreceipts"></div>
+    
+    <ng-template #nofarmerdata>
+      <div id="fixed-content" style="top: 60%;">
+        <mat-card>
+          Haven't Received any payments Yet!!
+        </mat-card>
+      </div>
+    </ng-template>
+    
+    <ng-template #showfarmerreceipts>
+      <div class="row" id="fixed-content">
+      <ng-container *ngFor="let r of receipts">
+        <div  style="padding: 10px;background-color: transparent;border: transparent;" class="card col-md-6">
+        <mat-card class="matcard">
+          
+          <mat-card-title>Cropname : {{r.cropname}}</mat-card-title> 
+          <label>Dealername : {{r.custname}}</label> 
+          <mat-card-subtitle>Purchased Quantity : {{r.custreqqty}}Kg</mat-card-subtitle>
+          <mat-card-content>Amount Paid : {{r.custamt}}</mat-card-content>
+         
+        </mat-card>
+      </div>
+      </ng-container>
+    </div>
+    </ng-template>
+    
+    </ng-template>
+    
+
+  <ng-template #elseBlock>
+    <div class="container row">
+      <h2><Strong>Dealer</Strong></h2>
+    <div  class="col-md-6">
+      <mat-card style="padding: 25px;background-color: rgb(255, 255, 255);">
+        
+        <mat-card-title>{{userdata.dealername | titlecase}}</mat-card-title>
+        <mat-card-subtitle>{{userdata.demail}}</mat-card-subtitle>
+        <mat-card-content><label>Mobile Number &nbsp;</label> {{userdata.dphn}}
+        </mat-card-content>
+        <b id="online">&nbsp;&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;<i>Active</i><br>
+
+      </mat-card>
+    </div>
+    <div id="pic" style="margin-left: 15%;">
+      <p id="letter">{{userdata.dealername | titlecase | slice:0:1}}</p>
+      
+    </div>
+    
+     
+  </div>
+  <div id="placebutton">
+    <button mat-raised-button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+      style="width: 180px;background-color: green;color: white;">Edit Profile</button>
+  </div>
+
+<h3 style="color: rgb(0, 0, 0); padding: 20px;font-weight: bold;font-size: larger;">Receipts</h3>
+<div *ngIf="!receipts?.length; then nodata; else showreceipts"></div>
+<ng-template #nodata>
+  <div id="fixed-content" style="top: 60%;">
+    <mat-card>
+      No payments done!!
+    </mat-card>
+  </div>
+</ng-template>
+
+<ng-template #showreceipts>
+  <div class="row" id="fixed-content">
+  <ng-container *ngFor="let r of receipts">
+    <div  style="padding: 10px;background-color: transparent;border: transparent;" class="card col-md-6">
+    <mat-card class="matcard">
+      
+      <mat-card-title>Cropname : {{r.cropname}}</mat-card-title>
+      <label>Farmername : {{r.fname}}</label>  
+      <mat-card-subtitle>Purchased Quantity : {{r.custreqqty}}Kg</mat-card-subtitle>
+      <mat-card-content>Amount Paid : {{r.custamt}}</mat-card-content>
+     
+    </mat-card>
+  </div>
+  </ng-container>
+</div>
+</ng-template>
+
+</ng-template>
+
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!--farmer Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">Farmer Profile</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3 row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={{userdata.femail}}>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>UserName</mat-label>
+            <input [(ngModel)]="farmerdetails.farmername" required name="farmername" value="{{userdata.farmername}}"
+              type="text" matInput />
+          </mat-form-field>
+        </div>
+        <div class="mb-3 row">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Mobile Number</mat-label>
+            <input [(ngModel)]="farmerdetails.fphn" required name="fphn" value={{userdata.fphn}} type="number"
+              matInput />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updatefarmer()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--dealer Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">Farmer Profile</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3 row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={{userdata.demail}}>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>UserName</mat-label>
+            <input [(ngModel)]="dealerdetails.dealername" required name="dealername" value="{{userdata.dealername}}"
+              type="text" matInput />
+          </mat-form-field>
+        </div>
+        <div class="mb-3 row">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Mobile Number</mat-label>
+            <input [(ngModel)]="dealerdetails.dphn" required name="dphn" value={{userdata.dphn}} type="number"
+              matInput />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updatedealer()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <img src="/assets/data/linegrass.png" style="margin-top:3px;height: 228px;width:100%;background-attachment: fixed;" /> -->

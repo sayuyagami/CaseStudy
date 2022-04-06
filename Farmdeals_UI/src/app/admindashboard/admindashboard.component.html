@@ -1,0 +1,218 @@
+
+<p style="border: 1px solid white"></p>
+<div style="text-align: center;" ><h1 class="card-title">Welcome to Admin Dashboard</h1></div>
+<h3 style="background-color:lightgrey; margin-left: 5%;margin-right: 5%; "><b>FARMERS Data</b></h3>
+<ng-container *ngIf="farmerslist.length !=0">
+    
+    <div class="container">
+        <div class="card-table">
+            <div class="cart-product">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile number</th>
+                          
+                            <th>Number of Subscribers</th> 
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let f of farmerslist; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{f.farmername}}</td>
+                           
+                            <td style="width: 25%;">{{f.femail}}</td>
+                            <th style="width: 12%;">{{f.fphn}}</th>
+                           
+                            <div *ngIf="f.subs">
+                            <td style="width: 12%;">{{f.subs.length}}</td>
+                            </div>
+                            <div *ngIf="!f.subs">
+                                <td style="width: 12%;">0</td>
+                                </div>
+                            <td>
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal1"  (click)=farmeredit(f) class="btn btn-primary"><span class="material-icons">edit</span></button>
+                            </td>
+                            <td>
+                                <button  mwlConfirmationPopover
+                                [popoverTitle]="popoverTitle"
+                                [popoverMessage]="popoverMessage"
+                                placement="left"
+                                (confirm)="farmerdelete(f.farmerid)"
+                                (cancel)="cancelClicked = true" class="btn btn-danger">
+                                <span class="material-icons">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="farmerslist.length ==0">
+    <div class="container">
+        <div class="card">
+            <h5 class="card-title">Admin Dashboard</h5>
+        </div>
+        <div class="center">
+            <h4>No users yet!!</h4>
+        </div>
+    </div>
+</ng-container> 
+<h3 style="background-color:lightgrey; margin-left: 5%;margin-right: 5%; "><b>DEALERS Data</b></h3>
+<ng-container *ngIf="dealerslist.length !=0">
+    
+    <div class="container">
+        <div class="card-table">
+            <div class="cart-product">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Name</th>
+                            
+                            <th>Email</th>
+                            <th>Mobile number</th>
+                            <th>Number of Subscriptions</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of dealerslist; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{d.dealername}}</td>
+                            
+                            <td style="width: 25%;">{{d.demail}}</td>
+                            <th style="width: 12%;">{{d.dphn}}</th>
+                            <div *ngIf="d.subs">
+                            <td style="width: 12%;">{{d.subs.length}}</td> 
+                           </div>
+                           <div *ngIf="!d.subs">
+                            <td style="width: 12%;">0</td> 
+                           </div>
+                            <td>
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal2"  (click)=dealeredit(d) class="btn btn-primary"><span class="material-icons">edit</span></button>
+                            </td>
+                            <td>
+                                <button  mwlConfirmationPopover
+                                [popoverTitle]="popoverTitle"
+                                [popoverMessage]="popoverMessage"
+                                placement="left"
+                                (confirm)="dealerdelete(d.dealerid)"
+                                (cancel)="cancelClicked = true" class="btn btn-danger">
+                                <span class="material-icons">delete</span>
+                                </button>
+                                
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="dealerslist.length ==0">
+    <div class="container">
+        <div class="card">
+            <h5 class="card-title">Admin Dashboard</h5>
+        </div>
+        <div class="center">
+            <h4>No users yet!!</h4>
+        </div>
+    </div>
+</ng-container> 
+
+
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">Farmers Profile</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         
+            <div class="mb-3 row">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input  [(ngModel)]="farmerdata.femail" required name="femail"
+                    value="{{farmerdata.femail}}"
+                    type="text" matInput />
+                </mat-form-field>
+              </div>
+              <div class="mb-3 row">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>UserName</mat-label>
+                    <input  [(ngModel)]="farmerdata.farmername" required name="farmername"
+                    value="{{farmerdata.farmername}}"
+                    type="text" matInput />
+                </mat-form-field>
+              </div>
+              <div class="mb-3 row">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Mobile Number</mat-label>
+                    <input  [(ngModel)]="farmerdata.fphn" required name="fphn"
+                    value={{farmerdata.fphn}}
+                    type="number" matInput />
+                </mat-form-field>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="updatefarmer()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">Dealers Profile</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+            <div class="mb-3 row">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input  [(ngModel)]="dealerdata.demail" required name="demail"
+                    value="{{dealerdata.demail}}"
+                    type="text" matInput />
+                </mat-form-field>
+              </div>
+              <div class="mb-3 row">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>UserName</mat-label>
+                    <input  [(ngModel)]="dealerdata.dealername" required name="dealername"
+                    value="{{dealerdata.dealername}}"
+                    type="text" matInput />
+                </mat-form-field>
+              </div>
+              <div class="mb-3 row">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Mobile Number</mat-label>
+                    <input  [(ngModel)]="dealerdata.dphn" required name="dphn"
+                    value={{dealerdata.dphn}}
+                    type="number" matInput />
+                </mat-form-field>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="updatedealer()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>

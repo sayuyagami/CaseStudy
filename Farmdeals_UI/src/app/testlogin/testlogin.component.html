@@ -1,0 +1,10 @@
+<div class="alignformm">
+<form>
+<mat-label>Username</mat-label>
+<input type="text" name="username" [(ngModel)]="credentials.username"/><br>
+<mat-label>Password</mat-label>
+<input type="password" name="password" placeholder="password" [(ngModel)]="credentials.password"/><br>
+<button mat-raised-button color="primary" type="submit" routerLink="/login/farmer">Login</button>
+<button mat-raised-button>Reset</button>
+</form>
+</div>

@@ -1,0 +1,70 @@
+/*.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }*/
+
+  .posts{
+    margin-left: 2%;
+    margin-top: 8%;
+  }
+
+  
+  #search{
+    margin-left: 50%;
+    margin-top: 5px;
+  }
+ 
+  .full-width{
+    width: 50%;
+    color: white;
+  }
+  
+  
+  #fixed-content {
+    top: 8%;
+    bottom:0;
+    position:fixed;
+    overflow-y:scroll;
+  }
+
+  #fixed-content::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+  #sky {
+    height:154px;
+    background-color: #cccccc;
+    background-image: linear-gradient(rgb(119, 164, 170), rgba(255, 255, 255, 0.993));
+  }
+  
+  #placebutton1{
+    margin-top: 5px;
+    float: left;
+    margin-left: 2%;
+  }
+  #postcard{
+    width: 330px;
+    height: 460px;
+    border-radius: 10px;padding-right: 20px;
+    background-image:linear-gradient(rgb(255, 255, 255), rgba(255, 255, 255, 0.993));
+  }
+
+  
+  .btn{
+    background-image:linear-gradient(rgb(255, 255, 255), rgba(0, 0, 0, 0.993))
+  }
+
+  .btn:hover{
+    background-image: linear-gradient(rgb(20, 20, 20), rgba(0, 0, 0, 0.993),rgba(0, 0, 0, 0.993));
+  }
+
+  img.fit-picture{
+    width: 300px;
+    height: 200px;
+    transition:0.3s ease-in-out
+  }
+
+  
+
+  img.fit-picture:hover{
+    transition: 0.3 ease-in-out;
+    transform: scale(1.1);
+  }

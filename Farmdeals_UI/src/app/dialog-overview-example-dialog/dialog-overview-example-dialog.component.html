@@ -1,0 +1,24 @@
+<div *ngIf="dloggedin; then proceed;else ok"></div>
+
+  <ng-template #proceed>
+    <h4 mat-dialog-title style="font-weight: bold;">Payment Successful</h4>
+<div mat-dialog-content>
+  <img src="/assets/data/success.png" width="60px" height="60px" style="margin-left: 30%;">
+  <p>Your payment receipt generated please check in your profile</p>
+</div>
+<div mat-dialog-actions>
+  
+  <button mat-raised-button class="btn btn-success" style="width: 100%;" (click)="clearitem()">Ok</button>
+  </div>
+  </ng-template>
+  <ng-template #ok>
+    <h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+  <p>{{data.msg}}</p>
+</div>
+<div mat-dialog-actions>
+  
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button color="primary" cdkFocusInitial  (click)="directto()">OK</button>
+  </div>
+  </ng-template>

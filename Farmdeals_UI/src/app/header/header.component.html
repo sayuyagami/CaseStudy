@@ -1,0 +1,21 @@
+<mat-toolbar style="background-color: black;">
+<span><a mat-icon-button routerLink="/" style="color: white;">
+<span style="font-size:xx-large;color: lawngreen;">F</span>armDeals</a></span>
+<div *ngIf="role; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+<a mat-icon-button routerLink="/farmerdashboard" *ngIf="loggedIn" style="color: white;margin-left: 60%;margin-right: 3%;">Dashboard</a>
+<a mat-icon-button routerLink="/profile" *ngIf="loggedIn" style="color: white;margin-left: 3%;">{{userdata.farmername | titlecase}}</a>
+</ng-template>
+
+<ng-template #elseBlock>
+    <a mat-icon-button routerLink="/dealerdashboard" *ngIf="dloggedIn" style="color: white;margin-left: 60%;margin-right: 3%;">Dashboard</a>
+    <a mat-icon-button routerLink="/profile" *ngIf="dloggedIn" style="color: white;margin-left: 3%;">{{userdata.dealername | titlecase}}</a>
+</ng-template>
+
+<div  style="flex: 1 1 auto;"></div>
+<a mat-icon-button routerLink="/cropslist" style="color: white;margin-right: 50px;">Posts</a>
+<a mat-icon-button routerLink="/contact"  style="color: white;margin-right: 75px;">Contact Us</a>
+<a mat-raised-button  routerLink="/registerpage" style="background-color: lawngreen;" *ngIf="!loggedIn&&!dloggedIn">Register</a>
+<a mat-raised-button style="background-color: lawngreen;" (click)="logoutUser()" *ngIf="loggedIn">Logout</a>
+<a mat-raised-button style="background-color: lawngreen;" (click)="logoutUser()" *ngIf="dloggedIn">Logout</a>
+</mat-toolbar>   

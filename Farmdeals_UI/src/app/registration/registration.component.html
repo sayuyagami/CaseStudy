@@ -1,0 +1,92 @@
+  <div class="hero">
+    <p style="border: 2px solid lawngreen;margin-bottom: 20px;"></p>
+    <div id="sky">
+    <div class="form-box">
+    <div class="button-box">
+    <div id="btn"></div>
+
+<button type="button" class="toggle-btn" style="color: antiquewhite;" (click)="registerclick()">Register</button>
+<button type="button" class="toggle-btn"  (click)="loginclick()">Log In</button>
+</div>
+
+   <div *ngIf="register; then registerBlock; else loginBlock"></div>
+   <ng-template #loginBlock>
+    <form id="login" class="input-group">
+      <dl >
+      <dd><button mat-raised-button (click)="onSelect(1)"style="width:300px;background: linear-gradient(to left, #21e74c,#e0e9e7);">Farmer</button> </dd><br>
+      <dd><button mat-raised-button (click)="onSelect(2)" style="width:300px;background: linear-gradient(to left, #21e74c,#e0e9e7);"> Dealer</button></dd>
+    </dl>
+      </form>
+    </ng-template>
+   
+      <ng-template #registerBlock>
+        <div class="social-icons">
+          <button mat-raised-button style="background-color: #21e74c;" (click)="farmerregister()"   type="button">Farmer</button>&nbsp;
+          <button mat-raised-button style="background-color: black;color: beige;" (click)="dealerregister()" type="button">Dealer</button>
+        </div>
+
+        <form *ngIf='userregister' [formGroup]="userregister">
+         
+          <div class="container row">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Username</mat-label>
+            <input formControlName="username" type="text" matInput />
+        </mat-form-field>
+            <small style="margin-left: 80px;" class="text-danger" *ngIf="userregister.controls['username'].touched && userregister.controls['username'].errors">
+         Name must be at least 4 characters long.
+          </small> 
+        <small  style="margin-left: 80px;" *ngIf="userregister.controls['username'].dirty && userregister.hasError('required','username')" class="text-danger">*Username required!!</small><br>
+       
+      </div>
+      <div class="container row">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label  class='fa fa-envelope'>Email Id</mat-label>
+          <input formControlName="email" type="email" matInput />
+      </mat-form-field>
+      <small style="margin-left: 80px;" *ngIf="userregister.controls['email'].dirty && userregister.hasError('required','email')" class="text-danger">*Email required!!</small>
+      <br>
+      </div>
+      <div class="container row">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label class="fa fa-lock">Mobile No</mat-label>
+        <input formControlName="phnnum" type="tel" matInput />
+    </mat-form-field>
+    <small style="margin-left: 80px;" *ngIf="userregister.controls['phnnum'].dirty && userregister.controls['phnnum'].errors" class="text-danger">*phone number must have 10 digits!!</small>
+   </div>
+    
+  
+    <div class="row" style="width: 500px;margin-left: 53px;">
+      <div class="col-md-6">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label class="fa fa-lock">Password</mat-label>
+            <input  formControlName="password"  type="password" matInput />
+        </mat-form-field>
+      </div>
+   
+      <div class="col-md-6">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label class="fa fa-lock">Confirm Password</mat-label>
+          <input  formControlName="confirmpassword"  type="password" matInput />
+      </mat-form-field>
+    </div>
+    <small style="margin-left: 80px;" *ngIf="userregister.controls['confirmpassword'].dirty && userregister.controls['confirmpassword'].errors" class="text-danger">password didn't match</small>
+  </div>
+    <div *ngIf="formval; then registerfarmer; else registerdealer"></div>
+  <ng-template #registerfarmer>
+        <button  style="color: white;" mat-raised-button type="submit" 
+        class="submit-btn" (click)="sendfarmerdata(userregister.value)">Register</button>
+      </ng-template>
+      <ng-template #registerdealer>
+        <button  style="color: white;" mat-raised-button type="submit" 
+        class="submit-btn" (click)="senddealerdata(userregister.value)">Register</button>
+      </ng-template>
+        </form>
+     
+      </ng-template>
+  
+     
+   </div>
+      </div>
+     </div>
+     <img src="/assets/data/linegrass.png" style="margin-top:7.3%;height: 199px;width:100%;background-attachment: fixed;"/>
+    

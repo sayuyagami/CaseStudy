@@ -1,0 +1,35 @@
+<div id="sky">
+
+    <div  style="text-align: center;">
+       <!-- <div id="cloud-intro" >-->
+       
+        <img src="/assets/data/login.png" height="150px" width="150px"/>
+       
+        <div style=" margin-left: 35%;margin-right: 35%;">
+            <p style="color: red;padding:3px">{{errormsg}}</p>
+        <form (ngSubmit)="onSubmit()" >
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label class='fa fa-envelope'>Email</mat-label>
+                <input [(ngModel)]="credentials.useremail" required name="useremail"
+                 type="text" matInput />
+            </mat-form-field><br>
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label class="fa fa-lock">Password</mat-label>
+                <input  [(ngModel)]="credentials.password" required name="password"
+                type="password" matInput />
+            </mat-form-field>
+           
+                <button type="submit" mat-raised-button color="primary" >Login</button>&nbsp;
+                <button type="submit" mat-raised-button color="accent" click="onselect()">Reset</button>
+           
+        </form>
+       
+    </div>
+    
+    <!--  {{credentials | json}}-->
+    <img src="/assets/data/linegrass.png" style="height: 238px;width:100%;background-attachment: fixed;"/>
+    </div>
+    
+    <!--</div>-->
+    </div>
+    

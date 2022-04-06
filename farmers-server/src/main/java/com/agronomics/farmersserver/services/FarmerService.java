@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Stream;
 
+import java.util.Set;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -20,23 +18,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.agronomics.farmersserver.exceptions.NodataFoundException;
 import com.agronomics.farmersserver.models.CropImages;
-import com.agronomics.farmersserver.models.Crops;
 import com.agronomics.farmersserver.models.Cropsdata;
 import com.agronomics.farmersserver.models.Farmers;
-import com.agronomics.farmersserver.models.ListCrops;
-import com.agronomics.farmersserver.models.Purchases;
 import com.agronomics.farmersserver.models.ReceiveMessage;
 import com.agronomics.farmersserver.models.Role;
 import com.agronomics.farmersserver.repository.CropImagesRepository;
@@ -69,7 +59,7 @@ public class FarmerService implements UserDetailsService{
 		        throw new UsernameNotFoundException("username not found");
 		    }
 		
-        //return new User(useremail, password, new ArrayList<>());
+       
 	}
 	private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
 	    Set<GrantedAuthority> roles = new HashSet<>();
@@ -119,47 +109,6 @@ public class FarmerService implements UserDetailsService{
 		List<Cropsdata> farmercrops = fallbackservice.postedcropslist();
 		return farmercrops;
 	}
-	
-	
-	/*public String updatestatusofreq(Long dealerid, Long cropid, String reqstatus) {
-		// TODO Auto-generated method stub
-		Purchases p =new Purchases();
-		p.setDealerid(dealerid);
-		p.setReqcropid(cropid);
-		p.setReqstatus(reqstatus);
-		rabbtemplate.convertAndSend(MQConfig.EXCHANGE,
-                MQConfig.ROUTING_KEY, p);
-		return "Message sent Successfully ";
-	}*/
-
-	
-	/*public String addcrops(Long id,Crops crops, String croptype){ 
-		crops.setOperation("add");
-		Farmers f =farmerrepo.findById(id).get();
-		crops.setFarmerid(id);
-		crops.setFarmername(f.getFarmername());
-		crops.setCroplocation(crops.getCroplocation());
-		crops.setCropname(crops.getCropname());
-		crops.setCropprice(crops.getCropprice());
-		crops.setCropqty(crops.getCropqty());
-		if(croptype.equals("KharifCrops")) {
-			crops.setCroptype("KharifCrops");
-			rabbtemplate.convertAndSend(MQConfig.EXCHANGE,
-	                MQConfig.ROUTING_KEY, crops);
-			return "Request sent Successfully through RabbitMQ Added Kharif crop ";
-		}else if(croptype.equals("RabbiCrops")) {
-			crops.setCroptype("RabbiCrops");
-			rabbtemplate.convertAndSend(MQConfig.EXCHANGE,
-	                MQConfig.ROUTING_KEY, crops);
-			return "Request sent Successfully through RabbitMQ Added Rabbi crop ";
-		}else if(croptype.equals("CashCrops")) {
-			crops.setCroptype("CashCrops");
-			rabbtemplate.convertAndSend(MQConfig.EXCHANGE,
-	                MQConfig.ROUTING_KEY, crops);
-			return "Request sent Successfully through RabbitMQ Added Cash crop ";
-		}
-		return "Invalid Crop type mentioned";
-	}*/
 
 	public String addcropimage(String cropid,MultipartFile file) throws IOException { 
         CropImages photo = new CropImages(); 
@@ -190,32 +139,6 @@ public class FarmerService implements UserDetailsService{
 	}
 	
 	
-	/*public String updtcropbyid(Long id, Long cropid, Crops crops,String croptype) {
-		crops.setOperation("update");
-		
-			Cropsdata kc = fallbackservice.allcrops(cropid);
-			if(kc!=null) {
-				kc.setFarmerid(id);
-				kc.setCroplocation(crops.getCroplocation());
-				kc.setCropprice(crops.getCropprice());
-				kc.setCropqty(crops.getCropqty());
-				
-				rabbtemplate.convertAndSend(MQConfig.EXCHANGE,
-		                MQConfig.ROUTING_KEY, crops);
-				return "Update Request sent Successfully through RabbitMQ for "+croptype;
-			}
-		return "Crop details not updated";
-	}*/
-	
-	public ListCrops displaycropsbyname(Long id, String cropname) {
-		ListCrops c= new ListCrops();
-		 List<Cropsdata> lsc=displaycropsforcurrentuser(id);
-		List<Cropsdata> kc=lsc.stream().filter((crop)->crop.getCropname().equals(cropname)).toList();
-		c.setCropdata(kc);
-		return c;
-	}
-	
-
 	public String delfarmerdet(Long farmerid) {
 		farmerrepo.deleteById(farmerid);
 		return "User deleted";
@@ -255,6 +178,11 @@ public class FarmerService implements UserDetailsService{
 			}
 		}	
 	}
+	public String farmerdelete(Long id) {
+		// TODO Auto-generated method stub
+		farmerrepo.deleteById(id);
+		return "record deleted";
+		}
 
 	/*public String updtcropreqbyid(Long farmerid, Long cropid, Long reqid, Crops crops, String croptype) {
 		crops.setOperation("updaterequeststatus");

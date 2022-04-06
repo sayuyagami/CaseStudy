@@ -91,10 +91,13 @@ public class AuthController {
 	
 	@PostMapping("/agroupdate/{tk}/{fetchurl}")
 	private ResponseEntity<?> updatedetails(@PathVariable String tk,@PathVariable String fetchurl,@RequestBody Farmers fm) {
-		
+		String CLIENT_URL;
 		String token = "Bearer " + tk;
-		String CLIENT_URL="http://localhost:8082/farmers/"+fetchurl;
-	
+		if(fetchurl=="dealereditdet") {
+			CLIENT_URL="http://localhost:8083/dealers/"+fetchurl;
+		}else {
+		CLIENT_URL="http://localhost:8082/farmers/"+fetchurl;
+		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", token);
 		HttpEntity<Farmers> requestUpdate = new HttpEntity<>(fm, headers);

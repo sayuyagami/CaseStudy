@@ -1,6 +1,7 @@
 package com.javatechie.spring.paytm.api;
 
 import java.util.Map;
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.paytm.pg.merchant.PaytmChecksum;
 //import com.paytm.pg.merchant.CheckSumServiceHelper;
 
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false"  )
 @Controller
 public class PaymentController {
 	
@@ -30,22 +33,20 @@ public class PaymentController {
 	}
 
 	 @PostMapping(value = "/pgredirect")
-	    public ModelAndView getRedirect(@RequestParam(name = "CUST_ID") String customerId,
-	                                    @RequestParam(name = "TXN_AMOUNT") String transactionAmount,
-	                                    @RequestParam(name = "ORDER_ID") String orderId) throws Exception {
+	    public String getRedirect(@RequestBody paymentdetails paydetails) throws Exception {
 
 	        ModelAndView modelAndView = new ModelAndView("redirect:" + paytmDetails.getPaytmUrl());
 	        TreeMap<String, String> parameters = new TreeMap<>();
 	        paytmDetails.getDetails().forEach((k, v) -> parameters.put(k, v));
 	        parameters.put("MOBILE_NO", env.getProperty("paytm.mobile"));
 	        parameters.put("EMAIL", env.getProperty("paytm.email"));
-	        parameters.put("ORDER_ID", orderId);
-	        parameters.put("TXN_AMOUNT", transactionAmount);
-	        parameters.put("CUST_ID", customerId);
+	        parameters.put("ORDER_ID", paydetails.getCropid());
+	        parameters.put("TXN_AMOUNT", paydetails.getCustamt());
+	        parameters.put("CUST_ID", paydetails.getCustid());
 	        String checkSum = getCheckSum(parameters);
 	        parameters.put("CHECKSUMHASH", checkSum);
 	        modelAndView.addAllObjects(parameters);
-	        return modelAndView;
+	        return "redirect:/pgresponse";
 	    }
 	 
 	 

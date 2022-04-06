@@ -30,16 +30,7 @@ public class Crops {
 	private @Getter @Setter String cropreqstatus;
 	private @Getter @Setter String croptype;
 	private @Getter @Setter String croplocation;
-	private @Getter @Setter String operation;
-	private @Getter @Setter String cropstatus;
-	private  @Setter @Getter Long purchaseid;
-	private @Getter @Setter Long dealerid;
-	private @Getter @Setter String dealername;
-	private @Getter @Setter Long reqcropid;
-	private @Getter @Setter String reqqty;
-	private @Getter @Setter int Negotiateprice;
-	private @Getter @Setter String reqstatus;
-	private @Getter @Setter String image;
+	
 	//private @Getter @Setter String cropphoto;
-	private @Getter @Setter List<Purchases> Requests;
+	
 }

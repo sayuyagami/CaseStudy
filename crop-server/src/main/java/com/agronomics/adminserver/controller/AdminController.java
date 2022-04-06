@@ -22,7 +22,7 @@ import com.agronomics.adminserver.models.CropImages;
 import com.agronomics.adminserver.models.Crops;
 import com.agronomics.adminserver.models.Cropsdata;
 import com.agronomics.adminserver.models.Farmers;
-import com.agronomics.adminserver.models.ListCrops;
+import com.agronomics.adminserver.models.payModel;
 import com.agronomics.adminserver.service.AdminServices;
 
 @CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false"  )
@@ -69,6 +69,21 @@ public class AdminController {
 		return adminservices.Allcropsbyfarmerid(farmerid);
 	}
 	
+	@PostMapping("/paydata")
+	public String payments(@RequestBody payModel pay) {
+		return adminservices.paymentbydealer(pay);
+	}
+	
+	@GetMapping("/receiptsbyfarmerid/{fid}")
+	public List<payModel> farmerreceipts(@PathVariable int fid) {
+		return adminservices.receiptsbyfarmerid(fid);
+	}
+	
+	@GetMapping("/receiptsbydealerid/{dealerid}")
+	public List<payModel> Allfarmerposts(@PathVariable int dealerid)  {
+		return adminservices.receiptsbydealerid(dealerid);
+	}
+	
 	@PutMapping("/editcrop/{farmerid}")
 	public ResponseEntity<?>  updatefarmerposts(@PathVariable long farmerid, @RequestBody Crops crps) throws Exception {
 		return adminservices.updtcropsbyfarmerid(farmerid,crps);
@@ -99,7 +114,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/Kharifcropslist")
-	public List<Cropsdata> Kharifcropposts() throws Exception {
+	public List<Cropsdata> Kharifcropposts()  {
 		return adminservices.AllKharifcrops();
 	}
 	
@@ -110,7 +125,7 @@ public class AdminController {
 	
 	@GetMapping("/Cashcropslist")
 	public List<Cropsdata> Cashcropposts() throws Exception {
-		return adminservices.AllRabbicrops();
+		return adminservices.AllCashcrops();
 	}
 	/*@GetMapping("/viewposts")
 	public List<KharifCrops> getfarmerposts() {

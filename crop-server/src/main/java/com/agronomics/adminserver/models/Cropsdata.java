@@ -36,7 +36,7 @@ private @Getter @Setter String cropstatus;
 private @Getter @Setter String image;
 private @Getter @Setter byte[] picByte;
 //private @Getter @Setter String cropphoto;
-private @Getter @Setter List<Purchases> Requests;
+private @Getter @Setter String Requests;
 
 }
 

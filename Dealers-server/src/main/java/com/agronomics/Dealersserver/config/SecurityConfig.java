@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/v2/api-docs").permitAll()
+        http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/v2/api-docs").permitAll()
         .antMatchers("/configuration/ui").permitAll()
         .antMatchers("/swagger-resources/**").permitAll()
         .antMatchers("/configuration/security").permitAll()
@@ -57,8 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/swagger-ui/*").permitAll()
         .antMatchers("/webjars/**").permitAll()
         .antMatchers("/v2/**").permitAll()
-        .antMatchers("/dealers/admin/dealerslist","/dealers/admin/{dealerid}").permitAll()
-        .antMatchers("/farmerregister","/auth","/swagger-ui/","/dealerregister").permitAll().anyRequest()
+        .antMatchers("/dealers/admin/dealerslist","/dealers/admin/{dealerid}","/dealers/admin/deletedealer/{dealerid}").permitAll()
+        .antMatchers("/auth","/swagger-ui/","/dealerregister","/dealers/admin/editdet/{did}").permitAll().anyRequest()
         .authenticated()
         .and().exceptionHandling().and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

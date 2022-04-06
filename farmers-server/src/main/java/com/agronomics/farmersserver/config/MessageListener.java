@@ -26,38 +26,5 @@ public class MessageListener {
     	}
     	
     }
-    	//System.out.println(message);
-    /*	if(message.getOperation().equals("add")) {
-    	try {
-    		service.Receivespostsfromfarmer(message);	
-    	}catch(Exception e) {
-    	System.out.println("Exception "+ e.getMessage());
-    
-    	}
     	
-    }else if(message.getOperation().equals("update")) {
-    	try {
-    		service.updatepostforfarmer(message);	
-    	}catch(Exception e) {
-    	System.out.println("Exception "+ e.getMessage());
-    
-    	}
-    }else if(message.getOperation().equals("purchase")) {
-    	try {
-    		service.requestcropfromdealer(message);	
-    	}catch(Exception e) {
-    	System.out.println("Exception "+ e.getMessage());
-    
-    	}
-    }else if(message.getOperation().equals("updaterequeststatus")) {
-    	try {
-    		
-    		service.updaterequestcropfromdealer(message);	
-    		//System.out.println("Hello after");
-    	}catch(Exception e) {
-    	System.out.println("Exception "+ e.getMessage());
-    
-    	}
-    }*/
-    
 }

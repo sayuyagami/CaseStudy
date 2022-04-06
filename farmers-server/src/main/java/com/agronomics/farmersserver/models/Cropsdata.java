@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Document(collection="Cropsdata")
+@Document(collection="cropsdata")
 public class Cropsdata {
 
 @Id
@@ -33,12 +33,10 @@ private @Getter @Setter int cropprice;
 private @Getter @Setter String croptype;
 private @Getter @Setter String croplocation;
 private @Getter @Setter String cropstatus;
-private @Getter @Setter Long imgid;
-private @Getter @Setter String imgtitle;
-private @Getter @Setter Binary image;
-
+private @Getter @Setter String image;
+private @Getter @Setter byte[] picByte;
 //private @Getter @Setter String cropphoto;
-private @Getter @Setter List<Purchases> Requests;
+private @Getter @Setter String Requests;
 
 }
 

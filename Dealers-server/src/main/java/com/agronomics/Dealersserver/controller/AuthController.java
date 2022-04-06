@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ import com.agronomics.Dealersserver.repository.DealersRepository;
 import com.agronomics.Dealersserver.repository.RoleRepository;
 import com.agronomics.Dealersserver.services.SequenceGeneratorService;
 import com.agronomics.Dealersserver.util.JwtUtil;
-
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false"  )
 @RestController
 public class AuthController {
 

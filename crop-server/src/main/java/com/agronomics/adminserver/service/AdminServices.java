@@ -15,17 +15,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.agronomics.adminserver.exception.NodataException;
 import com.agronomics.adminserver.models.AuthResponse;
 import com.agronomics.adminserver.models.CropImages;
 import com.agronomics.adminserver.models.Crops;
 import com.agronomics.adminserver.models.Cropsdata;
 import com.agronomics.adminserver.models.Dealers;
 import com.agronomics.adminserver.models.Farmers;
-import com.agronomics.adminserver.models.ListCrops;
-import com.agronomics.adminserver.models.Purchases;
+
+import com.agronomics.adminserver.models.payModel;
 import com.agronomics.adminserver.repositories.CropImagesRepository;
 import com.agronomics.adminserver.repositories.CropsdataRepository;
+import com.agronomics.adminserver.repositories.payModelRepository;
 
 
 
@@ -34,6 +34,9 @@ public class AdminServices {
 
 	@Autowired
 	CropsdataRepository croprepo;
+	
+	@Autowired
+	payModelRepository payrepo;
 	
 	@Autowired
 	CropImagesRepository cropimgrepo;
@@ -64,26 +67,26 @@ public class AdminServices {
 	}
 	
 	//get Kharifcrops details
-	public List<Cropsdata> AllKharifcrops() throws Exception {
+	public List<Cropsdata> AllKharifcrops()  {
 		List<Cropsdata> lsk=croprepo.findAll().stream().filter((k)->k.getCroptype().equals("KharifCrops")).toList();
-		if(lsk.size()==0) { throw new NodataException("No data");}
-		else
+		if(lsk.size()==0) { }
+		else {
 			return lsk;
+		}
+		return null;
 	}
 
-	public List<Cropsdata> AllRabbicrops() throws Exception {
+	public List<Cropsdata> AllRabbicrops(){
 		// TODO Auto-generated method stub
 		List<Cropsdata> lsr=croprepo.findAll().stream().filter((k)->k.getCroptype().equals("RabbiCrops")).toList();
-		try {
+		
 			if(lsr.size()==0) {
-				throw new NodataException("No data");
+				
 			}else {
 				return lsr;
 				}
-			}
-		catch(NodataException e) {
-			e.getMessage();
-		}
+			
+		
 		return null;	
 	}
 	
@@ -109,12 +112,11 @@ public class AdminServices {
 			kc.setCropprice(message.getCropprice());
 			kc.setCropqty(message.getCropqty());
 			kc.setCroptype(message.getCroptype());
+	
 			kc.setFarmername(message.getFarmername());
 			byte[] imgval=cropimgrepo.findById(num+1).get().getPicByte();
 			kc.setPicByte(decompressBytes(imgval));
-			//kc.setImgid(num+1);
-			//kc.setImgtitle(message.getFarmername()+num+1);
-			//kc.setImage(message.getImage());
+		
 			kc.setCropstatus("Available");
 			croprepo.save(kc);
 			return ResponseEntity.ok("added crop");
@@ -197,41 +199,6 @@ public class AdminServices {
 			}
 		}
 
-	public void requestcropfromdealer(Crops message) {
-		// TODO Auto-generated method stub
-			Cropsdata kc= croprepo.findById(message.getReqcropid()).get();
-			Purchases p =new Purchases();
-			p.setDealerid(message.getDealerid());
-			p.setDealername(message.getDealername());
-			p.setNegotiateprice(message.getNegotiateprice());
-			p.setPurchaseid(message.getPurchaseid());
-			p.setReqstatus(message.getReqstatus());
-			List<Purchases> lsreqs = new ArrayList<>();
-			if(kc.getRequests()!=null){
-				lsreqs=kc.getRequests();
-			}
-				lsreqs.add(p);
-				kc.setRequests(lsreqs);
-				croprepo.save(kc);	
-	}
-
-	public void updaterequestcropfromdealer(Crops message) {
-		
-			Cropsdata kc=croprepo.findById(message.getCropid()).get();
-			List<Purchases> lsp=kc.getRequests();
-			
-			for(int i=0;i<lsp.size();i++) {
-				if(lsp.get(i).getPurchaseid().equals(message.getPurchaseid())) {
-					Purchases p =lsp.get(i);
-					p.setReqstatus(message.getCropreqstatus());
-					lsp.set(i, p);
-					kc.setRequests(lsp);
-					croprepo.save(kc);
-				}
-			}
-	}
-
-
 	public List<String> Allcropstypes() {
 		// TODO Auto-generated method stub
 		List<String> ls = new ArrayList<>();
@@ -295,6 +262,21 @@ public class AdminServices {
 		return cropimgrepo.findAll();
 	}
 
+	public String paymentbydealer(payModel pay) {
+		// TODO Auto-generated method stub
+		payrepo.save(pay);
+		return "paydata recorded";
+	}
+
+	public List<payModel> receiptsbyfarmerid(int fid) {
+		// TODO Auto-generated method stub
+		return payrepo.findByfid(fid);
+	}
+
+	public List<payModel> receiptsbydealerid(int dealerid) {
+		// TODO Auto-generated method stub
+		return payrepo.findBycustid(dealerid);
+	}
 	
 	
 }

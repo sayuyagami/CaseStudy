@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.agronomics.farmersserver.models.Cropsdata;
-import com.agronomics.farmersserver.models.ListCrops;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
@@ -28,7 +27,7 @@ public class FallbackService {
 		
 		public List<Cropsdata> fallbackcropserver() {
 			List<Cropsdata> lc =new ArrayList<>();
-			lc.add(new Cropsdata(null,null, "crop server down", null, null, 0, null, null, null, null, null, null, null));
+			lc.add(new Cropsdata(null,null, "crop server down", null, null, 0, null, null, null, null, null, null));
 			return lc;
 		}
 		
@@ -40,7 +39,7 @@ public class FallbackService {
 		}
 		
 		public Cropsdata fallbackCrops(Long cropid) {
-			return new Cropsdata(null,null,"Crop server is down try again later","Fallback try again later", null, 0, null, null, null, cropid, null, null, null);
+			return new Cropsdata(null,null,"Crop server is down try again later","Fallback try again later", null, 0, null, null, null, null, null, null);
 		}
 		
 		
@@ -53,7 +52,7 @@ public class FallbackService {
 		
 		public List<Cropsdata> fallbackcroplistbyid(Long farmerid) {
 			List<Cropsdata> lc =new ArrayList<>();
-			lc.add(new Cropsdata(null,null, "crop server down", null, null, 0, null, null, null, null, null, null, null));
+			lc.add(new Cropsdata(null,null, "crop server down", null, null, 0, null, null, null, null, null, null));
 			return lc;
 		}
 }

@@ -50,4 +50,5 @@ private @Getter @Setter long fphn;
 @DBRef
 private @Getter @Setter Set<Role> roles;
 private @Getter @Setter List<Long> subs;
+private @Getter @Setter int postsnum;
 }

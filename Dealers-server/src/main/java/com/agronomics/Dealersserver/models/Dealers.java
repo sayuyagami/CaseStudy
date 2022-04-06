@@ -48,5 +48,5 @@ public class Dealers {
 	@DBRef
 	private @Getter @Setter Set<Role> roles;
 	private @Getter @Setter List<Long> subs;
-
+	private @Getter @Setter int postsnum;
 }

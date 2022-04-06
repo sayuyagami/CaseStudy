@@ -68,7 +68,7 @@ public class Webcorspolicy implements WebMvcConfigurer {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().cors().disable()
         .authorizeRequests().antMatchers("/v2/api-docs").permitAll()
         .antMatchers("/configuration/ui").permitAll()
         .antMatchers("/swagger-resources/**").permitAll()
@@ -77,8 +77,8 @@ public class Webcorspolicy implements WebMvcConfigurer {
         .antMatchers("/swagger-ui/*").permitAll()
         .antMatchers("/webjars/**").permitAll()
         .antMatchers("/v2/**").permitAll()
-        .antMatchers("/farmers/farmerprofile").permitAll()
-        .antMatchers("/farmers/admin/farmerslist").permitAll()
+        .antMatchers("/farmers/admin/editdet/{fid}").permitAll()
+        .antMatchers("/farmers/admin/farmerslist","/farmers/id/{farmerid}","/farmers/deleteid/{farmerid}").permitAll()
         .antMatchers("/farmers/cropslist","/farmers/cropslist/{cropbyid}").permitAll()
         .antMatchers("/farmerregister","/auth","/swagger-ui/","/dealerregister","/").permitAll().anyRequest()
         .authenticated()

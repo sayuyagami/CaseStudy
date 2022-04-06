@@ -2,26 +2,24 @@ package com.agronomics.Dealersserver.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.agronomics.Dealersserver.models.Crops;
-import com.agronomics.Dealersserver.models.Cropsdata;
 import com.agronomics.Dealersserver.models.Dealers;
-import com.agronomics.Dealersserver.models.ListCrops;
 import com.agronomics.Dealersserver.services.DealerService;
 
 @RestController
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false"  )
 @RequestMapping("/dealers")
 public class DealerController {
 	
@@ -38,17 +36,23 @@ public class DealerController {
 	     return dealservice.getauthdealerinfo(); 
 	}
 	
-	//Everyone can access this crop data
-	@GetMapping("/cropslist")
-	public ListCrops Allcropposts() {
-		return dealservice.Allcrops();
-	}
-	
 	@PostMapping("/subscribe/{farmerid}")
 	public String subscribeid(@PathVariable Long farmerid) {
 		Dealers authuser =currentUserName();
 		Long dealerid=authuser.getDealerid();
 		return dealservice.subscribefarmer(farmerid,dealerid);
+	}
+	
+	@PutMapping(value="/editdet")
+	public String updatedealer(@RequestBody Dealers dealersdet) {
+		Dealers authuser =currentUserName();
+		Long dealerid=authuser.getDealerid();
+		return dealservice.updatedealerdet(dealersdet, dealerid);
+	}
+	
+	@DeleteMapping("/deleteid/{dealerid}")
+	public String deldet(@PathVariable("dealerid") Long id) {
+		return dealservice.dealerdelete(id);
 	}
 	
 	@PostMapping("/unsubscribe/{farmerid}")
@@ -63,24 +67,7 @@ public class DealerController {
 	public Dealers getdetbyname(@PathVariable String dealername) {
 		return dealservice.getdealerdetbyname(dealername);
 	}
-			
-//dealer making purchase
-	@PostMapping("/croppurchase/{cropid}")
-	public String makekharifpurchase(@RequestBody Crops reqcrops,@PathVariable Long cropid) {
-		Dealers authuser =currentUserName();
-		Long dealerid=authuser.getDealerid();
-		return dealservice.purchaseforKharifcrop(dealerid, reqcrops, cropid);
-	}
-	
-	@PostMapping("/pay/{cropid}")
-	public String makekpayment(@PathVariable Long cropid) {
-		Dealers authuser =currentUserName();
-		String dealername=authuser.getDealername();
-		return dealservice.payforfarmer(dealername,cropid);		
-	}
-	
-	
-	
+
 	/******admin operation*************/
 
 	@GetMapping("/admin/dealerslist")
@@ -91,5 +78,14 @@ public class DealerController {
 	@GetMapping("/admin/{dealerid}")
 	public Optional<Dealers> getdealer(@PathVariable("dealerid") Long id) {
 		return dealservice.getdealerdetailsbyid(id);
+	}
+	@PutMapping(value="/admin/editdet/{did}")
+	public String updatedealeradmin(@RequestBody Dealers dealersdet,@PathVariable Long did) {
+		
+		return dealservice.updatedealerdet(dealersdet, did);
+	}
+	@DeleteMapping("/admin/deletedealer/{dealerid}")
+	public  String deletedealer(@PathVariable("dealerid") Long id) {
+		return dealservice.deletedealerbyid(id);
 	}
 }

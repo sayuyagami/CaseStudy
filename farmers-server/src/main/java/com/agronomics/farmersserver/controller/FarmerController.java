@@ -3,23 +3,20 @@ package com.agronomics.farmersserver.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agronomics.farmersserver.models.CropImages;
-import com.agronomics.farmersserver.models.Crops;
 import com.agronomics.farmersserver.models.Cropsdata;
 import com.agronomics.farmersserver.models.Farmers;
-import com.agronomics.farmersserver.models.ListCrops;
+
 import com.agronomics.farmersserver.services.FarmerService;
 import java.util.Base64;
-import io.swagger.models.Model;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,6 +31,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false"  )
 @RequestMapping("/farmers")
 @RestController
 public class FarmerController {
@@ -69,11 +67,6 @@ public class FarmerController {
 		return farmerservice.Allcrops();
 	}
 	
-	//update status
-	/*@PostMapping("/updatereq/{cropid}/{dealerid}")
-	public String updatereqstatus(@PathVariable Long dealerid,@PathVariable Long cropid,@RequestBody String reqstatus) {
-		return farmerservice.updatestatusofreq(dealerid,cropid,reqstatus);
-	}*/
 		
 	@GetMapping("/LoggedInuserposts")
 	public  List<Cropsdata> farmerpostedcrops() {
@@ -81,24 +74,6 @@ public class FarmerController {
 		Long farmerid=authuser.getFarmerid();
 		return farmerservice.displaycropsforcurrentuser(farmerid);
 	}
-		
-	//Farmer posted crop data by name
-	@GetMapping("/postsbyname/{cropname}")
-	public ListCrops farmercropsbyname(@PathVariable String cropname) {
-		Farmers authuser =currentUserName();
-		Long farmerid=authuser.getFarmerid();
-		return farmerservice.displaycropsbyname(farmerid,cropname);
-	}
-	
-	
-	//add crops
-	/*@PostMapping(value="/addcrops/{croptype}")
-	public String addcroppost(@RequestBody Crops crops,
-			@PathVariable String croptype) {
-		Farmers authuser =currentUserName();
-		Long farmerid=authuser.getFarmerid();
-		return farmerservice.addcrops(farmerid, crops,croptype);
-	}*/
 	
 	//add image
 	@Operation(  // Swagger/OpenAPI 3.x annotation to describe the endpoint
@@ -123,15 +98,7 @@ public class FarmerController {
 	    //new CropImages(photo.getImgid(),photo.getImgtitle(),Base64.getEncoder().encodeToString(photo.getImage().getData()))
 	    return Base64.getEncoder().encodeToString(photo.getImage().getData());
 	}
-	
-	//edit crops by id
-	/*@PutMapping(value="/cropbyid/{cropid}")
-	public String updatecroppost(@PathVariable Long cropid,@RequestBody Crops crops,@PathVariable String croptype) {
-		Farmers authuser =currentUserName();
-		Long farmerid=authuser.getFarmerid();
-		return farmerservice.updtcropbyid(farmerid,cropid, crops,croptype);
-	}*/
-	
+
 	//update details
 	@PutMapping(value="/editdet")
 	public String updatefarmer(@RequestBody Farmers farmersdet) {
@@ -140,13 +107,6 @@ public class FarmerController {
 		return farmerservice.updatefarmerdet(farmersdet, farmerid);
 	}
 	
-	//edit crops by id
-	/*@PutMapping(value="/cropbyid/{cropid}/{reqid}")
-	public String updatereqstatus(@PathVariable Long cropid,@PathVariable Long reqid,@RequestBody Crops crops,@PathVariable String croptype) {
-		Farmers authuser =currentUserName();
-		Long farmerid=authuser.getFarmerid();
-		return farmerservice.updtcropreqbyid(farmerid,cropid,reqid, crops,croptype);
-	}*/
 	
 	
 	/**************Admin Operations***************/
@@ -155,6 +115,17 @@ public class FarmerController {
 	@GetMapping("/id/{farmerid}")
 	public Optional<Farmers> getdet(@PathVariable("farmerid") Long id) {
 		return farmerservice.getfarmerdet(id);
+	}
+	
+	@PutMapping(value="/admin/editdet/{fid}")
+	public String updatefarmer(@RequestBody Farmers farmersdet,@PathVariable Long fid) {
+	
+		return farmerservice.updatefarmerdet(farmersdet, fid);
+	}
+	
+	@DeleteMapping("/deleteid/{farmerid}")
+	public String deldet(@PathVariable("farmerid") Long farmerid) {
+		return farmerservice.farmerdelete(farmerid);
 	}
 	
 	//search crop data
